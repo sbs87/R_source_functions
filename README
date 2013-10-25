@@ -1,0 +1,1 @@
+this dir holds R functions that are sourced into R scripts. Should remain a static dir. In future, should source an env variable that points to this dir in case dir name changes. 
