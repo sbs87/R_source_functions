@@ -15,14 +15,12 @@ calc_stats<-function(qpcr){
   #For each species and time point, find stats, i.e., artihmetic and geometric means and both sets of stdev.
   for(s in species){
     x<-qpcr[qpcr$species==s,]
-    #s<-species[4]
-    #t<-time[11]
     for(t in time){
       y<-x[x$time_text==t,]
-      u.art<-mean(y$ct,na.rm=T) #Artihmatic mean
-      u.geo<-mean(y$log.ct,na.rm=T) #Geometric mean
-      s.art<-arth.stdev(y$ct) #Artihmatic standard deviation (n-1)
-      s.geo<-arth.stdev(y$log.ct,u.geo) #Geometric standard deviation
+      u.art<-mean(y$copy_num,na.rm=T) #Artihmatic mean
+      u.geo<-mean(y$log.copy_num,na.rm=T) #Geometric mean
+      s.art<-arth.stdev(y$copy_num) #Artihmatic standard deviation (n-1)
+      s.geo<-arth.stdev(y$log.copy_num,u.geo) #Geometric standard deviation
       stats[stats$species==s & stats$time_text==t,]$mean_artitmetic<-u.art
       stats[stats$species==s & stats$time_text==t,]$mean_geometric<-u.geo
       stats[stats$species==s & stats$time_text==t,]$stdev_artitmetic<-s.art
