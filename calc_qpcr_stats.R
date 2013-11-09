@@ -30,3 +30,31 @@ calc_stats<-function(qpcr){
   }
   return(stats)
 }
+
+#COMMENT THIS
+relabund<-function(mean.species.copynum,mean.panbac.copynum){
+  #mean.species.copynum<-species.sub
+  #mean.panbac.copynum<-pb.sub
+  
+  time<-as.character(unique(mean.species.copynum$time))
+  species<-unique(mean.species.copynum$species)
+
+  rel.copynum<-matrix(rep(0,times=length(time)*length(species)),nrow=length(time)*length(species))
+  rel.copynum<-data.frame(rep(as.character(species),each=length(time)),matrix(time),rel.copynum)
+  names(rel.copynum)<-c("species","time","relative_abundance")
+  
+  for(s in species){
+
+    species.copynum<-mean.species.copynum[mean.species.copynum$species==s,]
+    for(t in time){
+
+      sp.cn<-species.copynum[species.copynum$time==t,3]
+      pb.cn<-mean.panbac.copynum[mean.panbac.copynum$time==t,2]
+      
+      rel.copynum[rel.copynum$species==s & rel.copynum$time==t,3]<-sp.cn/pb.cn
+    }
+  }
+  
+  return(rel.copynum)
+}
+
