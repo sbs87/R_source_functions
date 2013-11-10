@@ -40,7 +40,8 @@ relabund<-function(mean.species.copynum,mean.panbac.copynum){
   species<-unique(mean.species.copynum$species)
 
   rel.copynum<-matrix(rep(0,times=length(time)*length(species)),nrow=length(time)*length(species))
-  rel.copynum<-data.frame(rep(as.character(species),each=length(time)),matrix(time),rel.copynum)
+  time.numeric<-as.numeric(as.character(rep(time,times=length(species))))
+  rel.copynum<-data.frame(rep(as.character(species),each=length(time)),time.numeric,rel.copynum)
   names(rel.copynum)<-c("species","time","relative_abundance")
   
   for(s in species){
