@@ -59,3 +59,16 @@ relabund<-function(mean.species.copynum,mean.panbac.copynum){
   return(rel.copynum)
 }
 
+calc_other<-function(relative.abundance){
+  times<-unique(relative.abundance$time)
+  other.ra<-data.frame(rep("Other",times=length(times)),matrix(c(t(times),rep(0,times=length(times))),ncol=2))
+  names(other.ra)<-names(relative.abundance)
+
+  for(t in times){
+    other.ra[other.ra$time==t,3]<-1-sum(relative.abundance[relative.abundance$time==t,3],na.rm=T)
+  }
+  
+  other.ra<-rbind(relative.abundance,other.ra)
+  return(other.ra)
+}
+
