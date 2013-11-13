@@ -39,10 +39,10 @@ relabund<-function(mean.species.copynum,mean.panbac.copynum){
   time<-as.character(unique(mean.species.copynum$time))
   species<-unique(mean.species.copynum$species)
 
-  rel.copynum<-matrix(rep(0,times=length(time)*length(species)),nrow=length(time)*length(species))
+  rel.copynum<-matrix(rep(0,times=length(time)*length(species)),nrow=length(time)*length(species),ncol=2)
   time.numeric<-as.numeric(as.character(rep(time,times=length(species))))
   rel.copynum<-data.frame(rep(as.character(species),each=length(time)),time.numeric,rel.copynum)
-  names(rel.copynum)<-c("species","time","relative_abundance")
+  names(rel.copynum)<-c("species","time","relative_abundance","stdev")
   
   for(s in species){
 
@@ -51,8 +51,14 @@ relabund<-function(mean.species.copynum,mean.panbac.copynum){
 
       sp.cn<-species.copynum[species.copynum$time==t,3]
       pb.cn<-mean.panbac.copynum[mean.panbac.copynum$time==t,2]
+      ra<-sp.cn/pb.cn
       
-      rel.copynum[rel.copynum$species==s & rel.copynum$time==t,3]<-sp.cn/pb.cn
+      sp.stv<-species.copynum[species.copynum$time==t,4]
+      pb.stv<-mean.panbac.copynum[mean.panbac.copynum$time==t,3]
+      sd.dev<-ra*sqrt((sp.stv/sp.cn)^2+(pb.stv/pb.cn)^2)
+      
+      rel.copynum[rel.copynum$species==s & rel.copynum$time==t,3]<-ra
+      rel.copynum[rel.copynum$species==s & rel.copynum$time==t,4]<-sd.dev
     }
   }
   
@@ -61,11 +67,13 @@ relabund<-function(mean.species.copynum,mean.panbac.copynum){
 
 calc_other<-function(relative.abundance){
   times<-unique(relative.abundance$time)
-  other.ra<-data.frame(rep("Other",times=length(times)),matrix(c(t(times),rep(0,times=length(times))),ncol=2))
+  other.ra<-data.frame(rep("Other",times=length(times)),matrix(c(t(times),rep(0,times=length(times)*2)),ncol=3))
   names(other.ra)<-names(relative.abundance)
 
   for(t in times){
     other.ra[other.ra$time==t,3]<-1-sum(relative.abundance[relative.abundance$time==t,3],na.rm=T)
+    stdev<-sqrt(sum((relative.abundance[relative.abundance$time==t,4])^2,na.rm=T))
+    other.ra[other.ra$time==t,4]<-stdev
   }
   
   other.ra<-rbind(relative.abundance,other.ra)
