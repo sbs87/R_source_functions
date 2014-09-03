@@ -14,15 +14,3 @@ arth.stdev<-function(log.cts,u=mean(log.cts,na.rm=TRUE)){
   }
 }
 
-#Taken fromSOURCE this saves the file to disk
-ExportPlot <- function(gplot, filename, width=2, height=1.5) {
-  # Export plot in PDF and EPS.
-  # Notice that A4: width=11.69, height=8.27
-  ggsave(paste(filename, '.pdf', sep=""), gplot, width = width, height = height)
-  postscript(file = paste(filename, '.eps', sep=""), width = width, height = height)
-  print(gplot)
-  dev.off()
-  png(file = paste(filename, '.png', sep=""), width = width * 100, height = height * 100)
-  print(gplot)
-  dev.off()
-}
