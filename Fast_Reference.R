@@ -41,3 +41,11 @@ legend(4.3,.4,c("Negative Binomial: mean=2, a=1.5","Poisson: mean=2"),
        col=(c("red","blue")),
        pch=c(5,2),
        lty=1)
+
+## Bioconductor 
+
+source("http://bioconductor.org/biocLite.R")
+biocLite("DESeq")
+
+library(edgeR)
+edgeRUsersGuide()
