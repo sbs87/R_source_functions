@@ -1,0 +1,5 @@
+source("http://bioconductor.org/biocLite.R")
+biocLite("DESeq")
+library("ggplot2")
+library(COUNT)
+library(gmodels)
