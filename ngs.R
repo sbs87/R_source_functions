@@ -1,5 +1,9 @@
 source("http://bioconductor.org/biocLite.R")
 biocLite("DESeq")
+biocLite("metagenomeSeq")
+library("metagenomeSeq")
 library("ggplot2")
 library(COUNT)
 library(gmodels)
+
+vignette("metagenomeSeq")
