@@ -13,4 +13,3 @@ arth.stdev<-function(log.cts,u=mean(log.cts,na.rm=TRUE)){
     return(sigma)
   }
 }
-

@@ -1,8 +1,9 @@
 source("http://bioconductor.org/biocLite.R")
-biocLite("DESeq")
-biocLite("metagenomeSeq")
-library("metagenomeSeq")
-library("ggplot2")
+#biocLite("DESeq")
+#biocLite("metagenomeSeq")
+library(DESeq)
+library(metagenomeSeq)
+library(ggplot2)
 library(COUNT)
 library(gmodels)
 
